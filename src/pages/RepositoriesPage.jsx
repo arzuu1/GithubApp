@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import '../styles/RepositoriesPage.css';
-import SortBy from '../Components/SortByComponent';
-import PaginationComponent from "../Components/PaginationComponent";
-import { config } from "../config";
+import SortBy from '../Components/SortBy';
+import PaginationComponent from "../Components/Pagination";
 import { api } from "../api";
 
 function RepositoriesPage() {

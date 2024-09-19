@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import SearchComponent from "./Components/SearchComponent";
+import SearchComponent from "./Components/Search";
 import UserListComponent from "./Components/UserListComponent";
 import OrganizationsPage from "./pages/OrganizationPage";
 import RepositoriesPage from "./pages/RepositoriesPage";

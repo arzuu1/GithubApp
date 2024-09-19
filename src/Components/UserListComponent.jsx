@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import SearchComponent from "./SearchComponent";
-import UserItemComponent from "./UserItemComponent";
-import PaginationComponent from "./PaginationComponent";
+import Search from "./Search";
+import UserItem from "./UserItem";
+import Pagination from "./Pagination";
 import '../styles/userList.css'; 
 import { api } from "../api";
 
@@ -45,7 +45,7 @@ function UserListComponent() {
 
   return (
     <div>
-      <SearchComponent setSearchResults={setSearchResults} query={query} setQuery={setQuery} />
+      <Search setSearchResults={setSearchResults} query={query} setQuery={setQuery} />
       <div className="user-list">
         <table>
           <thead>
@@ -62,12 +62,12 @@ function UserListComponent() {
               </tr>
             ) : (
               searchResults.map((user) => (
-                <UserItemComponent key={user.id} user={user} />
+                <UserItem key={user.id} user={user} />
               ))
             )}
           </tbody>
         </table>
-        <PaginationComponent 
+        <Pagination 
           currentPage={currentPage} 
           setCurrentPage={setCurrentPage} 
           totalPages={totalPages} 

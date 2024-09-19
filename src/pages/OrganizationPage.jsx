@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import '../styles/organizations.css';
-import { config } from "../config";
 import { api } from "../api";
 
 function OrganizationsPage() {
@@ -18,6 +16,7 @@ function OrganizationsPage() {
         const response = await api.get(`/users/${username}/orgs`);
 
         setOrganizations(response.data);
+        setError('')
       } catch (error) {
         setError(error.message);
       } finally {

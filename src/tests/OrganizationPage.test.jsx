@@ -1,44 +1,73 @@
-import React from 'react';
+import '@testing-library/jest-dom'; // for matchers like 'toBeInTheDocument'
 import { render, screen, waitFor } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import OrganizationsPage from './OrganizationsPage';
-import './axios'; 
+import React from 'react';
+import { api } from '../api';
+import OrganizationsComponent from '../Components/Organizations';
 
-describe('OrganizationsPage', () => {
-  test('should display organizations when API returns data', async () => {
-    const mock = new MockAdapter(axios);
-    mock.onGet('https://api.github.com/users/testuser/orgs').reply(200, [
-      { id: 1, login: 'Organization1' },
-      { id: 2, login: 'Organization2' }
-    ]);
+describe('OrganizationsComponent', () => {
 
-    render(
-      <Router>
-        <OrganizationsPage />
-      </Router>
-    );
+  let mockAxios;
 
-   
+  // Set up a mock for axios
+  beforeEach(() => {
+    mockAxios = new MockAdapter(api);
+  });
+
+  // Reset mocks after each test
+  afterEach(() => {
+    mockAxios.reset();
+  });
+
+  const mockOrganizations = [
+    { id: 1, login: 'org1' },
+    { id: 2, login: 'org2' },
+  ];
+
+  test('renders organization list after successful API call', async () => {
+    // Mock the API response
+    mockAxios.onGet('/users/testuser/orgs').reply(200, mockOrganizations);
+
+    // Render the component
+    render(<OrganizationsComponent username="testuser" />);
+
+    // Assert loading state (if present) or ensure the UI renders first
+    expect(screen.getByText(/Organizations:/i)).toBeInTheDocument();
+
+    // Wait for the organizations to appear in the DOM
     await waitFor(() => {
-      expect(screen.getByText('Organization1')).toBeInTheDocument();
-      expect(screen.getByText('Organization2')).toBeInTheDocument();
+      expect(screen.getByText('org1')).toBeInTheDocument();
+      expect(screen.getByText('org2')).toBeInTheDocument();
     });
   });
 
-  test('should handle API errors gracefully', async () => {
-    const mock = new MockAdapter(axios);
-    mock.onGet('https://api.github.com/users/testuser/orgs').reply(500);
+  test('renders error message when API call fails', async () => {
+    // Mock the API to throw an error
+    mockAxios.onGet('/users/testuser/orgs').reply(500);
 
-    render(
-      <Router>
-        <OrganizationsPage />
-      </Router>
-    );
+    // Render the component
+    render(<OrganizationsComponent username="testuser" />);
 
+    // Wait for the error message to appear
     await waitFor(() => {
-      expect(screen.getByText('Error: Request failed with status code 500')).toBeInTheDocument();
+      expect(screen.getByText('Something error...')).toBeInTheDocument();
+    });
+  });
+
+  test('displays no organizations when API returns an empty list', async () => {
+    // Mock the API response with an empty list
+    mockAxios.onGet('/users/testuser/orgs').reply(200, []);
+
+    // Render the component
+    render(<OrganizationsComponent username="testuser" />);
+
+    // Check if the "Organizations:" header is still there
+    expect(screen.getByText(/Organizations:/i)).toBeInTheDocument();
+
+    // Ensure no organizations are rendered in the list
+    await waitFor(() => {
+      const orgItems = screen.queryAllByRole('listitem');
+      expect(orgItems.length).toBe(0);
     });
   });
 });

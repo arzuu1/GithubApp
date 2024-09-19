@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import '../styles/search.css';
-import { config } from "../config";
 import { api } from "../api";
 
 function SearchComponent({ setSearchResults, setQuery, query }) {
@@ -23,7 +21,6 @@ function SearchComponent({ setSearchResults, setQuery, query }) {
       setSearchResults(response.data.items || []);
       navigate(`/search?q=${encodeURIComponent(query)}&type=repositories`);
     } catch (error) {
-      console.error("Search failed:", error);
       setSearchResults([]);
       alert("Search failed. Please try again later.");
     } finally {

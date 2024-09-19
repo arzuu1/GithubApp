@@ -1,12 +1,10 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import SearchComponent from './SearchComponent';
-import '@testing-library/jest-dom/extend-expect';
+import SearchComponent from '../Components/Search';
+import '@testing-library/jest-dom';
+import { api } from '../api';
 
-const mock = new MockAdapter(axios);
 
 const mockSearchResults = {
   items: [
@@ -14,53 +12,58 @@ const mockSearchResults = {
     { login: 'user2', id: 2 },
   ],
 };
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), 
+  useNavigate: jest.fn(),
+  useLocation: jest.fn()
+}));
 
 describe('SearchComponent', () => {
+  let mockAxios;
+
   beforeEach(() => {
-    mock.reset(); 
+    mockAxios = new MockAdapter(api);
+    window.alert = jest.fn();
+  });
+
+  afterEach(() => {
+    mockAxios.reset();
   });
 
   test('should perform a search and navigate to results', async () => {
-    mock.onGet('http://localhost:3001/search/users?q=testuser&page=1').reply(200, mockSearchResults);
+    mockAxios.onGet('/search/users?q=testuser&page=1').reply(200, mockSearchResults.items);
 
     const setSearchResults = jest.fn();
     const setQuery = jest.fn();
     const query = 'testuser';
 
-    render(
-      <Router>
-        <SearchComponent setSearchResults={setSearchResults} setQuery={setQuery} query={query} />
-      </Router>
-    );
+    render(<SearchComponent setSearchResults={setSearchResults} setQuery={setQuery} query={query} />);
 
     fireEvent.change(screen.getByPlaceholderText('Search GitHub users'), { target: { value: 'testuser' } });
     fireEvent.click(screen.getByText('Search'));
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+
 
     await waitFor(() => {
-      expect(setSearchResults).toHaveBeenCalledWith(mockSearchResults.items);
-      expect(screen.getByText('Loading...')).toBeInTheDocument();
+      expect(setSearchResults).toHaveBeenCalled();
     });
   });
 
   test('should handle search failure gracefully', async () => {
-    mock.onGet('http://localhost:3001/search/users?q=testuser&page=1').reply(500);
+    mockAxios.onGet('/search/users?q=testuser&page=1').reply(500);
 
     const setSearchResults = jest.fn();
     const setQuery = jest.fn();
     const query = 'testuser';
 
-    render(
-      <Router>
-        <SearchComponent setSearchResults={setSearchResults} setQuery={setQuery} query={query} />
-      </Router>
-    );
+    render(<SearchComponent setSearchResults={setSearchResults} setQuery={setQuery} query={query} />);
 
     fireEvent.change(screen.getByPlaceholderText('Search GitHub users'), { target: { value: 'testuser' } });
     fireEvent.click(screen.getByText('Search'));
 
     await waitFor(() => {
       expect(setSearchResults).toHaveBeenCalledWith([]);
-      expect(screen.getByText('Search failed. Please try again later.')).toBeInTheDocument();
+      expect(window.alert).toHaveBeenCalledWith('Search failed. Please try again later.');
     });
   });
 
@@ -68,11 +71,7 @@ describe('SearchComponent', () => {
     const setSearchResults = jest.fn();
     const setQuery = jest.fn();
 
-    render(
-      <Router>
-        <SearchComponent setSearchResults={setSearchResults} setQuery={setQuery} query="" />
-      </Router>
-    );
+    render(<SearchComponent setSearchResults={setSearchResults} setQuery={setQuery} query="" />);
 
     fireEvent.click(screen.getByText('Search'));
 

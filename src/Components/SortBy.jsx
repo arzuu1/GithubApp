@@ -1,4 +1,5 @@
 import '../styles/sortby.css' 
+import React from 'react';
 
 const SortBy = ({ sortOption, setSortOption }) => {
   return (

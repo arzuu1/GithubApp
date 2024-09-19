@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import '../styles/userItem.css';
 
-function UserItemComponent({ user }) {
+function UserItem({user}) {
   const navigate = useNavigate();
 
   const handleShowOrgs = () => {
@@ -16,7 +16,7 @@ function UserItemComponent({ user }) {
   return (
     <tr className="user-item">
       <td className="avatar-cell">
-        <img src={user.avatar_url} alt={user.login} />
+        <img src={user.avatar_url} alt={user.login} style={{ width: '50px', height: '50px' }} />
       </td>
       <td className="username-cell">
         {user.login}
@@ -35,4 +35,4 @@ function UserItemComponent({ user }) {
   );
 }
 
-export default UserItemComponent;
+export default UserItem;
