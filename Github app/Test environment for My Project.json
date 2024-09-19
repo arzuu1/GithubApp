@@ -1,0 +1,158 @@
+{
+  "uuid": "aebfd54e-7a2c-4d78-b538-4a584c9bd5f8",
+  "lastMigration": 32,
+  "name": "Test environment for My Project",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3001,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "79fb80be-4bac-496e-b11a-c8acc82f2468",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "search/users  ",
+      "responses": [
+        {
+          "uuid": "a4b0b022-0771-4b31-9294-193145934317",
+          "body": "{\r\n  \"total_count\": 1,\r\n  \"incomplete_results\": false,\r\n  \"items\": [\r\n    {\r\n      \"login\": \"mockuser\",\r\n      \"id\": 12345,\r\n      \"avatar_url\": \"https://mockuser.com/avatar.jpg\",\r\n      \"html_url\": \"https://github.com/mockuser\"\r\n    } \r\n  ]\r\n}",
+          "latency": 0,
+          "statusCode": 500,
+          "label": "Success ",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "1164b8c7-d5c2-4b34-8b27-24cdaa967740",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "users/:username/orgs",
+      "responses": [
+        {
+          "uuid": "629f4a9e-c848-4df2-96ac-fb85bb24b5c0",
+          "body": "[\r\n  { \"id\": 1, \"login\": \"Organization1\" },\r\n  { \"id\": 2, \"login\": \"Organization2\" }\r\n]\r\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "9d9b6c29-1d80-4114-b148-c15fbf32264e",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "users/:username/repos",
+      "responses": [
+        {
+          "uuid": "3c9cc5b1-30ed-451f-a5ab-e8eb4b59ce92",
+          "body": "[\r\n  { \"id\": 1, \"name\": \"Repo1\" },\r\n  { \"id\": 2, \"name\": \"Repo2\" }\r\n]\r\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "79fb80be-4bac-496e-b11a-c8acc82f2468"
+    },
+    {
+      "type": "route",
+      "uuid": "1164b8c7-d5c2-4b34-8b27-24cdaa967740"
+    },
+    {
+      "type": "route",
+      "uuid": "9d9b6c29-1d80-4114-b148-c15fbf32264e"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [],
+  "callbacks": []
+}

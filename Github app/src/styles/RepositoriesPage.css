@@ -1,0 +1,13 @@
+
+.total-container {
+  display: flex;
+  justify-content: flex-start; 
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.sort-container {
+  display: flex;
+  justify-content: flex-end; 
+  margin-bottom: 20px;
+}

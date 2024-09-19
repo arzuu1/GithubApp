@@ -1,0 +1,29 @@
+
+.repositories-list {
+    padding: 1rem;
+  }
+  
+  .container h2{
+    text-align: center;
+  }
+
+  .repositories-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .repositories-list li {
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .repositories-list .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  
+  .repositories-list .pagination button {
+    margin: 0 0.5rem;
+  }
+  

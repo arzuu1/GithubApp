@@ -1,0 +1,26 @@
+.user-list-container {
+  margin: 20px;
+}
+
+.user-list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-list th, .user-list td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.user-list th {
+  background-color: #f4f4f4;
+}
+
+.user-list tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.user-list .pagination {
+  margin-top: 20px;
+  text-align: center;
+}

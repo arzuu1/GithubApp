@@ -1,0 +1,38 @@
+
+.user-item img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
+.user-item td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  vertical-align: middle;
+}
+
+.avatar-cell,
+.username-cell,
+.actions-cell {
+  width: 33.33%;
+}
+
+.button-group {
+  display: flex;
+  gap: 50px;
+  justify-content: center;
+}
+
+.button-group button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button-group button:hover {
+  background-color: #0056b3;
+}
