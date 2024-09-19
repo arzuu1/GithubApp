@@ -4,6 +4,7 @@ import axios from 'axios';
 import './RepositoriesComponent.css'; 
 import Pagination from './Pagination'; 
 import SortBy from './SortBy'; 
+import { api } from "../api";
 
 const RepositoriesComponent = () => {
   const { username } = useParams();
@@ -19,7 +20,7 @@ const RepositoriesComponent = () => {
     const axiosRepositories = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`https://api.github.com/users/${username}/repos`, {
+        const response = await api.get(`/users/${username}/repos`, {
           params: {
             per_page: 10,
             page: currentPage,

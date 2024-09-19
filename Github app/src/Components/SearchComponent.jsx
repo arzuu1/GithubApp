@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import '../styles/search.css';
+import { config } from "../config";
+import { api } from "../api";
 
 function SearchComponent({ setSearchResults, setQuery, query }) {
   const [loading, setLoading] = useState(false);
@@ -15,8 +17,8 @@ function SearchComponent({ setSearchResults, setQuery, query }) {
 
     setLoading(true);
     try {
-      const response = await axios.get(
-        `https://api.github.com/search/users?q=${query}&page=1`
+      const response = await api.get(
+        `/search/users?q=${query}&page=1`
       );
       setSearchResults(response.data.items || []);
       navigate(`/search?q=${encodeURIComponent(query)}&type=repositories`);

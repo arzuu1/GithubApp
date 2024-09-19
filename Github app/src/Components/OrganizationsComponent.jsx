@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import '../styles/organizations.css';
+import { api } from "../api";
 
 function OrganizationsComponent({ username }) {
   const [organizations, setOrganizations] = useState([]);
@@ -8,7 +9,7 @@ function OrganizationsComponent({ username }) {
     const axiosOrganizations = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`https://api.github.com/users/${username}/orgs`);
+        const response = await api.get(`/users/${username}/orgs`);
         setOrganizations(response.data);
       } catch (error) {
         setError("Something error...");

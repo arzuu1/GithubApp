@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios"; 
+import axios from "axios";
 import '../styles/organizations.css';
+import { config } from "../config";
+import { api } from "../api";
 
 function OrganizationsPage() {
   const { username } = useParams();
@@ -13,7 +15,8 @@ function OrganizationsPage() {
     const axiosOrganizations = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`https://api.github.com/users/${username}/orgs`);
+        const response = await api.get(`/users/${username}/orgs`);
+
         setOrganizations(response.data);
       } catch (error) {
         setError(error.message);

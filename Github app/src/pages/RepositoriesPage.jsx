@@ -4,6 +4,8 @@ import axios from "axios";
 import '../styles/RepositoriesPage.css';
 import SortBy from '../Components/SortByComponent';
 import PaginationComponent from "../Components/PaginationComponent";
+import { config } from "../config";
+import { api } from "../api";
 
 function RepositoriesPage() {
   const { username } = useParams();
@@ -16,14 +18,17 @@ function RepositoriesPage() {
   const [sortOption, setSortOption] = useState("stars_desc");
   const perPage = 10;
 
+
   useEffect(() => {
     const fetchRepositories = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(
-          `https://api.github.com/users/${username}/repos?per_page=100`
+        const response = await api.get(
+          `/users/${username}/repos?per_page=100`,
         );
         const data = response.data;
+
+
 
         const totalCountHeader = response.headers['x-total-count'];
         const totalCount = totalCountHeader ? parseInt(totalCountHeader, 10) : data.length;
@@ -98,12 +103,12 @@ function RepositoriesPage() {
           )}
         </tbody>
       </table>
- 
-      <PaginationComponent 
-          currentPage={currentPage} 
-          setCurrentPage={setCurrentPage} 
-          totalPages={totalPages} 
-        />
+
+      <PaginationComponent
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+      />
     </div>
   );
 }

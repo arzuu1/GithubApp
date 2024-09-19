@@ -3,8 +3,8 @@ import { useLocation } from "react-router-dom";
 import SearchComponent from "./SearchComponent";
 import UserItemComponent from "./UserItemComponent";
 import PaginationComponent from "./PaginationComponent";
-import axios from 'axios';
 import '../styles/userList.css'; 
+import { api } from "../api";
 
 function UserListComponent() {
   const [searchResults, setSearchResults] = useState([]);
@@ -22,8 +22,8 @@ function UserListComponent() {
       if (!searchQuery.trim()) return;
 
       try {
-        const response = await axios.get(
-          `https://api.github.com/search/users`,
+        const response = await api.get(
+          `/search/users`,
           {
             params: {
               q: searchQuery,
