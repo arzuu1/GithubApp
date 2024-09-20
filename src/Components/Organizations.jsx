@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import '../styles/organizations.css';
 import { api } from "../api";
 
-function OrganizationsComponent({ username }) {
+function Organizations({ username }) {
   const [organizations, setOrganizations] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false)
@@ -36,4 +36,4 @@ function OrganizationsComponent({ username }) {
   );
 }
 
-export default OrganizationsComponent;
+export default Organizations;

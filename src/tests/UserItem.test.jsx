@@ -2,9 +2,8 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { useNavigate } from 'react-router-dom';
-import UserItem from '../Components/UserItem'; // Komponentin düzgün yolunu yoxlayın
+import UserItem from '../Components/UserItem'; 
 
-// Mock useNavigate hook
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: jest.fn(),
@@ -28,12 +27,10 @@ describe('UserItem', () => {
   test('renders user information correctly', () => {
     render(<UserItem user={user} />);
 
-    // Check if avatar image is rendered
     const avatarImage = screen.getByAltText('testuser');
     expect(avatarImage).toBeInTheDocument();
     expect(avatarImage).toHaveAttribute('src', user.avatar_url);
 
-    // Check if username is rendered
     expect(screen.getByText('testuser')).toBeInTheDocument();
   });
 
@@ -43,7 +40,7 @@ describe('UserItem', () => {
     const showOrgsButton = screen.getByText('Show Organizations');
     fireEvent.click(showOrgsButton);
 
-    // Assert navigate was called with the correct URL
+    
     expect(mockNavigate).toHaveBeenCalledWith(`/organizations/${user.login}`);
   });
 
@@ -53,14 +50,13 @@ describe('UserItem', () => {
     const showReposButton = screen.getByText('Show Repositories');
     fireEvent.click(showReposButton);
 
-    // Assert navigate was called with the correct URL
     expect(mockNavigate).toHaveBeenCalledWith(`/repositories/${user.login}`);
   });
 
   test('renders user item with correct classes', () => {
     render(<UserItem user={user} />);
     
-    const userItem = screen.getByRole('row'); // Assuming <tr> is used, it should have a role of row
+    const userItem = screen.getByRole('row'); 
     expect(userItem).toHaveClass('user-item');
   });
 
@@ -68,7 +64,7 @@ describe('UserItem', () => {
     const emptyUser = {};
     render(<UserItem user={emptyUser} />);
 
-    // Check if no user information is rendered
+
     expect(screen.queryByAltText('')).not.toBeInTheDocument();
     expect(screen.queryByText(/testuser/i)).not.toBeInTheDocument();
   });
